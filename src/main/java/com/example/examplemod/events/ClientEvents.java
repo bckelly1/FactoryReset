@@ -24,8 +24,16 @@ public class ClientEvents {
             World world = player.getEntityWorld();
 
             BlockPos blockPos = event.getPos();
-            if(world.getBlockState(blockPos).getBlock().getRegistryType() == Blocks.DIRT.getClass()) {
-                world.setBlockState(blockPos, Blocks.GRASS_PATH.getDefaultState());
+            if(!world.isRemote()) {
+                if(world.getBlockState(blockPos).getBlock().getDefaultState() == Blocks.GRASS_BLOCK.getDefaultState()) {
+                    world.setBlockState(blockPos, Blocks.GRASS_PATH.getDefaultState());
+                }
+                else if(world.getBlockState(blockPos).getBlock().getDefaultState() == Blocks.COBBLESTONE.getDefaultState()) {
+                    world.setBlockState(blockPos, Blocks.STONE.getDefaultState());
+                }
+                else if(world.getBlockState(blockPos).getBlock().getDefaultState() == Blocks.STONE.getDefaultState()) {
+                    world.setBlockState(blockPos, Blocks.SAND.getDefaultState());
+                }
             }
         }
     }
